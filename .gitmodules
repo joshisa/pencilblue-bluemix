@@ -1,3 +1,6 @@
 [submodule "pencilblue"]
 	path = pencilblue
 	url = https://github.com/pencilblue/pencilblue
+[submodule "bluemix-objstor-pencilblue"]
+	path = bluemix-objstor-pencilblue
+	url = https://github.com/joshisa/bluemix-objstor-pencilblue
