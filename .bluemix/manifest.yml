@@ -1,0 +1,26 @@
+---
+declared-services:
+  pencilmongo:
+    label: compose-for-mongodb
+    plan: Standard
+  pencilredis:
+    label: compose-for-redis
+    plan: Standard
+  pencilobjstor:
+    label: Object-Storage
+    plan: Free
+
+applications:
+- name: <replace_me>
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  path: .
+  command: true; node pencilblue.js
+  env:
+    NODE_ENV: production
+  stack: cflinuxfs2
+  services:
+  - pencilmongo
+  - pencilredis
+  - pencilobjstor
