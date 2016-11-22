@@ -1,0 +1,30 @@
+From 63001ba0000e1b9a977f4d9cc149e56df040af32 Mon Sep 17 00:00:00 2001
+From: Sanjay Joshi <joshisa@us.ibm.com>
+Date: Tue, 22 Nov 2016 08:32:13 -0500
+Subject: [PATCH] Added config caching param for redis uris (unified form) to
+ support password protected redis instances
+
+---
+ include/dao/cache.js | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/include/dao/cache.js b/include/dao/cache.js
+index e3f091a..b6c575b 100755
+--- a/include/dao/cache.js
++++ b/include/dao/cache.js
+@@ -72,7 +72,11 @@ module.exports = function CacheModule(pb){
+ 
+         var moduleAtPlay = config.fake ? "fakeredis" : "redis";
+         var Redis        = require(moduleAtPlay);
+-        return Redis.createClient(config.port, config.host, config);
++        if (config.uri) {
++          return Redis.createClient(config.uri);
++        } else {
++          return Redis.createClient(config.port, config.host, config);
++        }
+     };
+ 
+     /**
+-- 
+2.7.3
+
