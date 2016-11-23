@@ -57,7 +57,7 @@ if (process.env.VCAP_SERVICES) {
       // Testing whether we found a redis service attached or not
       if (Object.keys(redisCreds).length) {
         redisNo = false;
-        workers = 6;
+        workers = 4;
         redisHost = redisCreds.hostname;
         redisPort = parseInt(redisCreds.port, 10);
         console.log("PencilBlue: Bluemix: Redis instance detected. Incrementing default worker count to " + workers)
