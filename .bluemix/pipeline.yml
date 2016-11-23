@@ -101,14 +101,33 @@ stages:
       fi
       # Create CF services
       echo -e "${tools}${Cyan}  Creating Mongo and Redis Service Instances${no_color}"
-      cf create-service compose-for-redis Standard pencilredis
-      cf create-service compose-for-mongodb Standard pencilmongo
+      t=0
+      until [ $t -ge 5 ]
+      do
+        cf create-service compose-for-redis Standard pencilredis > /dev/null 2>&1 && break
+        t=$[$t+1]
+        sleep 15
+      done
+
+      t=0
+      until [ $t -ge 5 ]
+      do
+        cf create-service compose-for-mongodb Standard pencilmongo > /dev/null 2>&1 && break
+        t=$[$t+1]
+        sleep 15
+      done
 
       if [ ${CF_REGION} == "AU" ]; then
         echo -e "${crossbones}${Yellow}    Object Storage service not available in this region${no_color}"
       else
         echo -e "${tools}${Cyan}  Creating Openstack Swift Object Storage Service Instance${no_color}"
-        cf create-service Object-Storage Free pencilobjstor
+        t=0
+        until [ $t -ge 5 ]
+        do
+          cf create-service Object-Storage Free pencilobjstor > /dev/null 2>&1 && break
+          t=$[$t+1]
+          sleep 15
+        done
       fi
   - name: DeliverPresent
     type: deployer
