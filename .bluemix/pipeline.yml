@@ -59,7 +59,7 @@ stages:
   triggers:
   - type: stage
   jobs:
-  - name: DetectRegion
+  - name: Services
     type: deployer
     target:
       url: ${CF_TARGET_URL}
@@ -99,8 +99,16 @@ stages:
         echo -e "${tools}${Cyan}  Detected Region: Sydney${no_color}"
         export CF_REGION=AU
       fi
+      # Create CF services
+      echo -e "${tools}${Cyan}  Creating Mongo and Redis Service Instances${no_color}"
+      cf create-service compose-for-redis Standard pencilredis
+      cf create-service compose-for-mongodb Standard pencilmongo
+
       if [ ${CF_REGION} == "AU" ]; then
         echo -e "${crossbones}${Yellow}    Object Storage service not available in this region${no_color}"
+      else
+        echo -e "${tools}${Cyan}  Creating Openstack Swift Object Storage Service Instance${no_color}"
+        cf create-service Object-Storage Free pencilobjstor
       fi
   - name: DeliverPresent
     type: deployer
