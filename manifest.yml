@@ -11,11 +11,11 @@ declared-services:
     plan: Free
 
 applications:
-- name: <replace_me>
+- name: replace_me
   memory: 512M
   instances: 1
   domain: mybluemix.net
-  path: .
+  path: ./pencilblue
   command: true; node pencilblue.js
   env:
     NODE_ENV: production

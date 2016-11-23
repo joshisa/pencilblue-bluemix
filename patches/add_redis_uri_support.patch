@@ -18,7 +18,7 @@ index e3f091a..b6c575b 100755
          var Redis        = require(moduleAtPlay);
 -        return Redis.createClient(config.port, config.host, config);
 +        if (config.uri) {
-+          return Redis.createClient(config.uri);
++          return Redis.createClient(config.uri, config);
 +        } else {
 +          return Redis.createClient(config.port, config.host, config);
 +        }
