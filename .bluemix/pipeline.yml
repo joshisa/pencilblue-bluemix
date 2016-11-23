@@ -43,6 +43,9 @@ stages:
       echo -e "${present}${Cyan}  Applying RedisURI Patch... ${no_color}"
       cd pencilblue && git am --signoff < ../patches/add_redis_uri_support.patch && cd ..
 
+      echo -e "${present}${Cyan}  Installing npm modules to facilitate custom config.js ... ${no_color}"
+      cd pencilblue && npm install mongodb-uri --save && npm install redis-url --save && cd ..
+
       echo -e "${delivery}${Cyan}  Moving IBM Bluemix Object Storage Plugin into the plugins folder ... ${no_color}"
       mv bluemix-objstor-pencilblue pencilblue/plugins
 
